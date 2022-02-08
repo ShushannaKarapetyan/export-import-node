@@ -24,7 +24,7 @@ function handle(limit, offset) {
                      JOIN category_translations ctr
                           ON categories.parent_id = ctr.id
             WHERE categories.status = 1
-              AND categories.created_at < "2022-02-06"
+--               AND categories.created_at < "2022-02-06"
 --              AND category_translations.name LIKE '%Shoes%'
             ORDER BY category_translations.name DESC  
             LIMIT ${limit}

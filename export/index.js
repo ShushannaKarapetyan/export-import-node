@@ -3,12 +3,13 @@ const db = require("../db/connection");
 const fs = require('fs');
 const sql = require('./handler/index');
 const dir = './export/files';
+require('dotenv').config();
 
 let append = false;
-let limit = 100;
+const limit = process.env.EXPORT_LIMIT
 let offset = 0;
 
-for (let index = 0; index < 10; index++) {
+for (let index = 0; index < 2; index++) {
     db.query(sql(limit, offset), (error, result) => {
         if (error) {
             throw error;
@@ -25,29 +26,6 @@ for (let index = 0; index < 10; index++) {
         }
 
         if (process.argv[2] == 'excel') {
-
-            // const workSheetName = 'Categories';
-            // //const filePath = `${dir}/excel_${Date.now()}.xlsx`;
-            // const filePath = './export/files/file.xlsx';
-            // const workSheetColumnName = [
-            //     'ID',
-            //     'name',
-            //     'parent_name',
-            //     'company_name',
-            //     'slug',
-            //     'description',
-            //     'status',
-            //     'url_path',
-            //     'locale',
-            //     'meta_title',
-            //     'meta_description',
-            //     'meta_keywords',
-            //     'created_at',
-            //     'updated_at',
-            // ];
-            //
-            // exportDataToExcel(result, workSheetColumnName, workSheetName, filePath);
-
             if (index > 0) {
                 append = true;
             }
@@ -60,5 +38,4 @@ for (let index = 0; index < 10; index++) {
     });
 
     offset += limit;
-    console.log(offset)
 }

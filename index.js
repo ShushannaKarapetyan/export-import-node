@@ -1,10 +1,9 @@
 require('dotenv').config();
-const express = require('express');
-const app = express();
+const http = require("http");
 const PORT = process.env.PORT;
 
-//app.get('/createDB', getCategories)
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-})
+http.createServer(function (req, res) {
+    console.log("Server running.");
+}).listen(PORT, function () {
+    console.log(`Server start at port ${PORT}`);
+});
