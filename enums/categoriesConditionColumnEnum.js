@@ -1,0 +1,16 @@
+module.exports = {
+    ID: 'id',
+    PARENT_NAME: 'parent_name',
+    NAME: 'name',
+    COMPANY_NAME: 'company_name',
+    SLUG: 'slug',
+    DESCRIPTION: 'description',
+    STATUS: 'status',
+    URL_PATH: 'url_path',
+    LOCALE: 'locale',
+    META_TITLE: 'meta_title',
+    META_DESCRIPTION: 'meta_description',
+    META_KEYWORDS: 'meta_keywords',
+    CREATED_AT: 'created_at',
+    UPDATED_AT: 'updated_at',
+}

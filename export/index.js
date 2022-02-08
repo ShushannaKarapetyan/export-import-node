@@ -4,13 +4,37 @@ const fs = require('fs');
 const sql = require('./handler/index');
 const dir = './export/files';
 require('dotenv').config();
+const exportableEntityEnums = require('../enums/exportableEntityEnum');
+const conditionOperatorEnums = require('../enums/conditionOperatorEnum');
+const orderingTypeEnums = require('../enums/orderingTypeEnum');
 
 let append = false;
 const limit = process.env.EXPORT_LIMIT
 let offset = 0;
 
+let args = {
+    'type': exportableEntityEnums.CATEGORY,
+    'searchTerm': 'Shoes',
+    'filters': [
+        {
+            'column': 'status',
+            'operator': conditionOperatorEnums.EQ,
+            'value': 1,
+        },
+        {
+            'column': 'created_at',
+            'operator': conditionOperatorEnums.LT,
+            'value': '2022-02-08',
+        },
+    ],
+    'ordering': {
+        'column': 'name',
+        'order': orderingTypeEnums.DESC,
+    },
+};
+
 for (let index = 0; index < 2; index++) {
-    db.query(sql(limit, offset), (error, result) => {
+    db.query(sql(limit, offset, args), (error, result) => {
         if (error) {
             throw error;
         }

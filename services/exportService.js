@@ -42,7 +42,7 @@ const exportDataToExcel = (result, append) => {
         });
 
         workbook.xlsx.writeFile(path)
-            .then(() => console.log('File created and data is ready.'))
+            .then(() => console.log('File created.'))
             .catch((err) => console.log(err));
     } else {
         workbook.xlsx.readFile(path)
