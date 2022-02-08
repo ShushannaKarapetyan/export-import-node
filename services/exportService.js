@@ -1,4 +1,6 @@
-const excelJS = require("exceljs");
+const excelJS = require('exceljs');
+const fastCSV = require('fast-csv');
+const fs = require("fs");
 const dir = './export/files';
 
 const exportDataToExcel = (result, append) => {
@@ -12,30 +14,18 @@ const exportDataToExcel = (result, append) => {
         width: 10,
     }));
 
-    // worksheet.columns = [
-    //     {header: "ID", key: "ID", width: 10},
-    //     {header: "name", key: "name", width: 10},
-    //     {header: "parent_name", key: "parent_name", width: 10},
-    //     {header: "company_name", key: "company_name", width: 10},
-    //     {header: "slug", key: "slug", width: 10},
-    //     {header: "description", key: "description", width: 10},
-    //     {header: "status", key: "status", width: 10},
-    //     {header: "url_path", key: "url_path", width: 10},
-    //     {header: "locale", key: "locale", width: 10},
-    //     {header: "meta_title", key: "meta_title", width: 10},
-    //     {header: "meta_description", key: "meta_description", width: 10},
-    //     {header: "meta_keywords", key: "meta_keywords", width: 10},
-    //     {header: "created_at", key: "created_at", width: 10},
-    //     {header: "updated_at", key: "updated_at", width: 10},
-    // ];
+    if (!fs.existsSync(dir)) {
+        try {
+            fs.mkdirSync(dir);
+        } catch (e) {
+            throw e;
+        }
+    }
 
     if (append == false) {
-        let counter = 1;
-
-        result.forEach((category) => {
-            worksheet.addRow(category);
-            counter++;
-        });
+        //result.forEach((category) => {
+            worksheet.addRows(result);
+        //});
 
         worksheet.getRow(1).eachCell((cell) => {
             cell.font = {bold: true};
@@ -68,8 +58,17 @@ const exportDataToExcel = (result, append) => {
     }
 }
 
-const exportDataToCSV = (result, append) => {
-
+const exportDataToCSV = (jsonData, params) => {
+    let {filename, headers, append} = params;
+    const flags = append === true ? 'a' : 'w'
+    const ws = fs.createWriteStream(filename, {flags, rowDelimiter: '\r\n'})
+    fastCSV
+        .write(jsonData, {headers})
+        .on('finish', () => {
+            // logger.info('Categories successfully exported!');
+            console.log('Categories successfully exported!');
+        })
+        .pipe(ws);
 }
 
 module.exports = {

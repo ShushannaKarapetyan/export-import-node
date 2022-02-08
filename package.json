@@ -16,6 +16,7 @@
     "dotenv": "^16.0.0",
     "exceljs": "^4.3.0",
     "express": "^4.17.2",
+    "fast-csv": "^4.3.6",
     "logger": "0.0.1",
     "mysql": "^2.18.1",
     "sequelize": "^6.15.1",
